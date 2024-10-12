@@ -89,8 +89,19 @@
 // server.listen(5000)
 
 // npm lodash
-const lodash = require('lodash')
-const item = [1,[2,[3,[4,[5]]]]]
-const newItem = lodash.flattenDeep(item)
-console.log(item);
-console.log(newItem);
+// const lodash = require('lodash')
+// const item = [1,[2,[3,[4,[5]]]]]
+// const newItem = lodash.flattenDeep(item)
+// console.log(item);
+// console.log(newItem);
+
+
+// Event loop
+const http = require('http')
+const server = http.createServer((req, res) => {
+    console.log(`requesr event : ${req.url}`);
+    res.end('Hello Node World..');
+})
+server.listen(5000, ()=> {
+    console.log("Server listening on port number: 5000");
+})
