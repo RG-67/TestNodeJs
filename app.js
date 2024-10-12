@@ -97,11 +97,54 @@
 
 
 // Event loop
-const http = require('http')
-const server = http.createServer((req, res) => {
-    console.log(`requesr event : ${req.url}`);
-    res.end('Hello Node World..');
+// const http = require('http')
+// const server = http.createServer((req, res) => {
+//     console.log(`requesr event : ${req.url}`);
+//     res.end('Hello Node World..');
+// })
+// server.listen(5000, ()=> {
+//     console.log("Server listening on port number: 5000");
+// })
+
+
+// Async patterns (SetUp Promises)
+// const {readFile} = require('fs')
+// const getText = (path) => {
+//     return new Promise((reject, resolve) => {
+//         readFile(path, 'utf8', (err, data) => {
+//             if (err) {
+//                 reject(err)
+//             } else {
+//                 resolve(data)
+//             }
+//         })
+//     })
+// }
+// getText('./TextFiles/created_file.txt').then((result) => console.log(result)).catch((err) => console.log(err))
+
+
+// Async pattern (Refractor to async)
+// const {readFile, writeFile} = require('fs').promises
+// const start = async () => {
+//     try {
+//         let first = await readFile('./TextFiles/first.txt', 'utf8')
+//         let second = await readFile('./TextFiles/second.txt', 'utf8')
+//         await writeFile('./TextFiles/created_file.txt', `Async pattern:-\n${first}\n${second}`)
+//         console.log(first, second)
+//     } catch(err) {
+//         console.log(err)
+//     }
+// }
+// start()
+
+
+// Events emitter
+const EventEmitter = require('events')
+const event = new EventEmitter()
+event.on('response', () => {
+    console.log(`data received..`);
 })
-server.listen(5000, ()=> {
-    console.log("Server listening on port number: 5000");
+event.on('response', () => {
+    console.log(`new data received..`)
 })
+event.emit('response')
