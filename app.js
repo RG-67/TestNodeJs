@@ -139,12 +139,42 @@
 
 
 // Events emitter
-const EventEmitter = require('events')
-const event = new EventEmitter()
-event.on('response', () => {
-    console.log(`data received..`);
+// const EventEmitter = require('events')
+// const event = new EventEmitter()
+// event.on('response', () => {
+//     console.log(`data received..`);
+// })
+// event.on('response', () => {
+//     console.log(`new data received..`)
+// })
+// event.emit('response')
+
+
+// Streams
+const {writeFile, createReadStream, readFileSync} = require('fs')
+const httpMode = require('http')
+// for (let i = 0; i < 1000; i++) {
+//     writeFile('./TextFiles/created_file.txt', `Hello Node World ${i}`, {flag: 'a'} , (err) => {
+//         if(err) {
+//             console.log(err);
+//             return
+//         }
+//     })
+// }
+// const stream = createReadStream('./TextFiles/created_file.txt')
+// stream.on('data', (result) => {
+//     console.log(result)
+// })
+const server = httpMode.createServer((req, res) => {
+    const fileSystem = createReadStream('./TextFiles/created_file.txt', 'utf8');
+    fileSystem.on('open', () => {
+        fileSystem.pipe(res)
+    })
+    fileSystem.on('error', (err) => {
+        res.end(err)
+    })
+    // let text = readFileSync('./TextFiles/created_file.txt', 'utf8')
+    // res.setHeader('Content-Length', Buffer.byteLength(text))
+    // res.end(text)
 })
-event.on('response', () => {
-    console.log(`new data received..`)
-})
-event.emit('response')
+server.listen(5000)
